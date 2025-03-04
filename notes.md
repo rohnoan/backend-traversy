@@ -54,3 +54,25 @@ roadmap-
             ES modules(ESM)- preferable
                 export default funcn
                 import  funcn from "./funcn.js";
+
+        http module and create server -
+            - import http to create the server
+            - create server with req, res to handle requests and responses
+            - use res.end() or res.write() to send something back
+            - use server.listen() to start and listen to the server
+        .gitignore- 
+            what not to push on github (node modules)
+        .env-   
+            these are the things you dont wan push in git repos because it contains your api keys and stuff
+        postman-
+            how to use postman extension to send request
+        OUTDATED routing-           
+            __filename for current file name
+            __dirname will give you dir name 
+                   
+            const __filename=url.fileURLToPath(import.meta.url)
+            const __dirname=path.dirname(__filename)
+
+            -make a filepath variable
+            -path.join the page you want to join
+        
