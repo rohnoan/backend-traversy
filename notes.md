@@ -66,7 +66,7 @@ roadmap-
             these are the things you dont wan push in git repos because it contains your api keys and stuff
         postman-
             how to use postman extension to send request
-        OUTDATED routing-           
+        routing(outdated)-           
             __filename for current file name
             __dirname will give you dir name 
                    
@@ -75,4 +75,23 @@ roadmap-
 
             -make a filepath variable
             -path.join the page you want to join
-        
+        simple API-
+            checks if route matches the requested url
+        middleware-
+            modules/functions that have access to the requests and responses bc they sit in the middle
+            
+            -Add extra functionality before your final route runs.
+            -Reuse code (like logging every request or checking authentication).
+            -Control the flow of requests.
+            -Handle errors.
+            -Modify requests or responses easily.
+        get req body for post-  
+            how to post-
+
+            Collect Request Data: Listens to incoming data chunks from the request body and combines them into a complete string (body).
+
+            Parse JSON: After all data is received (end event), it parses the body string into a JavaScript object using JSON.parse().
+
+            Save the User: Adds the new user object to the existing users array.
+
+            Send Response: Responds with status code 201 (Created) and returns the newly added user as JSON.
