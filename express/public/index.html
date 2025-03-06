@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express.js - Fast, unopinionated, minimalist web framework for Node.js</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            overflow-x: hidden;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(90deg, #259dff, #42b883);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+        }
+        
+        h3 {
+            font-size: 1.75rem;
+            color: #34495e;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+        
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        /* Header */
+        header {
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #259dff;
+            margin-left: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #259dff;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #259dff, #42b883);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding-top: 10rem;
+            padding-bottom: 6rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 60%;
+            height: 70%;
+            background: linear-gradient(135deg, rgba(37, 157, 255, 0.1) 0%, rgba(66, 184, 131, 0.1) 100%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            z-index: 0;
+        }
+        
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: -10%;
+            left: -10%;
+            width: 60%;
+            height: 70%;
+            background: linear-gradient(135deg, rgba(66, 184, 131, 0.1) 0%, rgba(37, 157, 255, 0.1) 100%);
+            border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #4a5568;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #259dff;
+            border: 2px solid #259dff;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(37, 157, 255, 0.1);
+        }
+        
+        /* Features Section */
+        .features {
+            background: white;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #259dff 0%, #42b883 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        /* Code Example Section */
+        .code-example {
+            background: #2c3e50;
+            color: white;
+            padding: 6rem 0;
+        }
+        
+        .code-example h2 {
+            color: white;
+            text-align: center;
+        }
+        
+        .code-block {
+            background: #1a2533;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 3rem;
+            overflow-x: auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .code-text {
+            font-family: 'Courier New', Courier, monospace;
+            color: #e2e8f0;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        .code-comment {
+            color: #8a9db0;
+        }
+        
+        .code-keyword {
+            color: #ff79c6;
+        }
+        
+        .code-string {
+            color: #f1fa8c;
+        }
+        
+        .code-function {
+            color: #50fa7b;
+        }
+        
+        /* Getting Started Section */
+        .getting-started {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            padding: 6rem 0;
+        }
+        
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #259dff 0%, #42b883 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Community Section */
+        .community {
+            background: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .community-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .community-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #4a5568;
+            transition: transform 0.3s ease;
+        }
+        
+        .community-link:hover {
+            transform: translateY(-5px);
+            color: #259dff;
+        }
+        
+        .community-icon {
+            width: 60px;
+            height: 60px;
+            background: #f7fafc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            color: #259dff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-left: 0.5rem;
+        }
+        
+        .footer-links h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            text-decoration: none;
+            color: #a0aec0;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+            }
+            
+            .nav-links li {
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+            
+            .hero {
+                padding-top: 8rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .step {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container container">
+            <div class="logo">
+                <div style="font-size: 2rem; font-weight: bold; color: #259dff;">E</div>
+                <div class="logo-text">Express</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#code">Examples</a></li>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#community">Community</a></li>
+                <li><a href="https://expressjs.com/en/api.html" class="btn">API Docs</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Express.js</h1>
+            <p class="hero-subtitle">Fast, unopinionated, minimalist web framework for Node.js. Build robust APIs and web applications with ease.</p>
+            <div class="hero-buttons">
+                <a href="#getting-started" class="btn">Get Started</a>
+                <a href="https://github.com/expressjs/express" class="btn btn-secondary">GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Express?</h2>
+                <p>Express provides a thin layer of fundamental web application features without obscuring Node.js features.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast & Lightweight</h3>
+                    <p>Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔌</div>
+                    <h3>Middleware</h3>
+                    <p>Use middleware to handle requests, modify response objects, and perform various tasks in your application's request-response cycle.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛣️</div>
+                    <h3>Routing</h3>
+                    <p>Define routes with different HTTP methods that respond to client requests with elegant route handling.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Extensible</h3>
+                    <p>Extend functionality with a vast ecosystem of middleware packages to handle everything from authentication to compression.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Performance</h3>
+                    <p>Built on Node.js, Express leverages its non-blocking I/O model to handle thousands of concurrent connections efficiently.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Community</h3>
+                    <p>Join a massive community of developers. Express is one of the most popular web frameworks for Node.js.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Example Section -->
+    <section class="code-example" id="code">
+        <div class="container">
+            <h2>Simple, Yet Powerful</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto;">Express makes it easy to create robust web applications and APIs with just a few lines of code.</p>
+            <div class="code-block">
+                <pre class="code-text"><span class="code-comment">// A simple Express server</span>
+<span class="code-keyword">const</span> <span class="code-function">express</span> = <span class="code-function">require</span>(<span class="code-string">'express'</span>);
+<span class="code-keyword">const</span> app = <span class="code-function">express</span>();
+<span class="code-keyword">const</span> port = <span class="code-function">process</span>.env.PORT || <span class="code-function">3000</span>;
+
+<span class="code-comment">// Middleware example</span>
+app.<span class="code-function">use</span>((req, res, next) => {
+  console.<span class="code-function">log</span>(<span class="code-string">`${req.method} ${req.url}`</span>);
+  next();
+});
+
+<span class="code-comment">// Route handling</span>
+app.<span class="code-function">get</span>(<span class="code-string">'/'</span>, (req, res) => {
+  res.<span class="code-function">send</span>(<span class="code-string">'Hello World!'</span>);
+});
+
+app.<span class="code-function">get</span>(<span class="code-string">'/api/users'</span>, (req, res) => {
+  res.<span class="code-function">json</span>([
+    { id: <span class="code-function">1</span>, name: <span class="code-string">'John Doe'</span> },
+    { id: <span class="code-function">2</span>, name: <span class="code-string">'Jane Smith'</span> }
+  ]);
+});
+
+<span class="code-comment">// Start the server</span>
+app.<span class="code-function">listen</span>(port, () => {
+  console.<span class="code-function">log</span>(<span class="code-string">`Server running at http://localhost:${port}`</span>);
+});</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section class="getting-started" id="getting-started">
+        <div class="container">
+            <div class="section-title">
+                <h2>Getting Started</h2>
+                <p>Start building with Express in minutes</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Install Node.js</h3>
+                        <p>Make sure you have Node.js installed on your system. Download it from <a href="https://nodejs.org/" style="color: #259dff; text-decoration: none;">nodejs.org</a>.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Create a new project</h3>
+                        <p>Create a new directory for your project and initialize it with npm:</p>
+                        <div style="background: #2c3e50; color: white; padding: 1rem; border-radius: 4px; font-family: 'Courier New', Courier, monospace; margin-top: 0.5rem;">
+                            $ mkdir my-express-app<br>
+                            $ cd my-express-app<br>
+                            $ npm init -y
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Install Express</h3>
+                        <p>Add Express as a dependency to your project:</p>
+                        <div style="background: #2c3e50; color: white; padding: 1rem; border-radius: 4px; font-family: 'Courier New', Courier, monospace; margin-top: 0.5rem;">
+                            $ npm install express
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Create your app</h3>
+                        <p>Create an index.js file and add your Express application code:</p>
+                        <div style="background: #2c3e50; color: white; padding: 1rem; border-radius: 4px; font-family: 'Courier New', Courier, monospace; margin-top: 0.5rem;">
+                            const express = require('express');<br>
+                            const app = express();<br>
+                            const port = 3000;<br><br>
+                            
+                            app.get('/', (req, res) => {<br>
+                            &nbsp;&nbsp;res.send('Hello World!');<br>
+                            });<br><br>
+                            
+                            app.listen(port, () => {<br>
+                            &nbsp;&nbsp;console.log(`App listening at http://localhost:${port}`);<br>
+                            });
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Run your app</h3>
+                        <p>Start your Express application:</p>
+                        <div style="background: #2c3e50; color: white; padding: 1rem; border-radius: 4px; font-family: 'Courier New', Courier, monospace; margin-top: 0.5rem;">
+                            $ node index.js
+                        </div>
+                        <p>Visit <span style="background: #e2e8f0; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'Courier New', Courier, monospace;">http://localhost:3000</span> in your browser to see your app in action!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community" id="community">
+        <div class="container">
+            <div class="section-title">
+                <h2>Join the Community</h2>
+                <p>Connect with other Express developers and get help when you need it.</p>
+            </div>
+            <div class="community-links">
+                <a href="https://github.com/expressjs/express" class="community-link">
+                    <div class="community-icon">GH</div>
+                    <h3>GitHub</h3>
+                    <p>Star the project and contribute</p>
+                </a>
+                <a href="https://stackoverflow.com/questions/tagged/express" class="community-link">
+                    <div class="community-icon">SO</div>
+                    <h3>Stack Overflow</h3>
+                    <p>Get answers to your questions</p>
+                </a>
+                <a href="https://expressjs.com/en/resources/community.html" class="community-link">
+                    <div class="community-icon">🌐</div>
+                    <h3>Forums</h3>
+                    <p>Discuss with other developers</p>
+                </a>
+                <a href="https://twitter.com/expressj

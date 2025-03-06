@@ -145,3 +145,75 @@ nodeJS-
     emitting events
         
     process object
+
+expressJS-
+    whats express-
+        -minimal and flexible web framework of nodeJS
+        -used for building server side applications and APIs
+        -simplifies the process of handling HTTP requests
+        -fast and unopinionated
+    opinionated-    
+        -suggested ways to do things
+        -usually offers a lot of bells and whistles
+        -strict folder structure
+        -example-django,next,etc
+    unopinionated-
+        -different ways to do the same thing
+        -includes the bare necessities
+        -structure folders how you want
+        -example-express,flask,etc
+    covered in this course- 
+        -routing
+        -reqs and respone
+        -custom middleware
+        -crud operations
+        -template engines
+        -error handling
+        -3rd party npm packages
+        -controllers
+        -fetching from frontend
+        -envirenment variables
+    basic server-   
+        import express
+        at '/' define some output
+        listen on a port
+    res.sendFile-
+        used for returning static pages
+    request params- 
+        params is object that holds route parameters or url parameters
+
+        example-    
+            app.get('/api/posts/:id', (req, res) => {
+                console.log(req.params); 
+                res.send(`Post ID is ${req.params.id}`);
+            });
+            on visiting-http://localhost:8000/api/posts/2
+            clg-{ id: '2' }
+            respone- post id is 2
+
+    query strings-  
+        app.get('/api/posts',(req,res)=>{
+            console.log(req.query)
+            const limit=parseInt(req.query.limit);
+            if(!isNaN(limit) && limit>0){
+                res.json(posts.slice(0,limit))
+            }else{
+                res.json(posts)
+            }
+        })
+
+        -always keep them in limits to avoid SQL injection
+    route files-
+        import router files from other files
+
+    req.body-
+        access data sent by client
+    
+    post put delete-
+        refer-routes/post.js
+    
+    middleware-
+        -has access to requests and responses
+        -loggin,authentication
+        -
+    
