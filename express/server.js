@@ -5,6 +5,7 @@ import logger from './middleware/logger.js'
 import errorHandler from './middleware/error.js';
 import notFound from './middleware/notFound.js';
 import { fileURLToPath } from 'url';
+import cors from 'cors'
 
 //dirname and filename workaround
 const __filename = fileURLToPath(import.meta.url);
@@ -13,6 +14,9 @@ const __dirname = path.dirname(__filename);
 const PORT=process.env.PORT|| 8080;
 
 const app=express();
+
+app.use(cors()); 
+
 
 //body parser middleware
 app.use(express.json());

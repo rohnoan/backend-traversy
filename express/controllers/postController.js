@@ -1,7 +1,11 @@
 //get all posts
 //route GET /api/posts
 
-
+export let posts=[
+    {id:1,title:'post1'},
+    {id:2,title:'post2'},
+    {id:3,title:'post3'}
+];
 export const getPosts=(req,res)=>{
     console.log(req.query)
     const limit=parseInt(req.query.limit);

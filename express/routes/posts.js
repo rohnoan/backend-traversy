@@ -5,11 +5,7 @@ import { createPost, deletePost, getPost, getPosts, updatePost } from '../contro
 
 const router=express.Router();
 
-let posts=[
-    {id:1,title:'post1'},
-    {id:2,title:'post2'},
-    {id:3,title:'post3'}
-];
+
 
 const logger=(req,res,next)=>{
     console.log(`${req.method}  ${req.protocol}://${req.get('host')}${req.originalUrl}`)
