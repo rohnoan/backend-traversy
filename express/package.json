@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
+    "start":"node server",
     "dev": "node --watch --env-file=.env server"
   },
   "keywords": [],
@@ -13,8 +12,6 @@
   "type": "module",
   "description": "",
   "dependencies": {
-    "colors": "^1.4.0",
-    "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "express": "^5.1.0"
   }
 }

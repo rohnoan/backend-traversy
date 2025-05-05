@@ -1,29 +1,25 @@
-
-import { error } from 'console';
 import express from 'express'
-import { createPost, deletePost, getPost, getPosts, updatePost } from '../controllers/postController.js'
-
+import {getPosts,getPost,deletePost,updatePost,createPost} from '../controllers/postController.js'
 const router=express.Router();
 
+let posts=[
+    {id:1,title:'post one'},
+    {id:2,title:'post two'},
+    {id:3,title:'post three'},
+]
 
-
-const logger=(req,res,next)=>{
-    console.log(`${req.method}  ${req.protocol}://${req.get('host')}${req.originalUrl}`)
-    next();
-}
-
-//get all posts with limit query
+//get all posts
 router.get('/',getPosts)
 
-//single post
+//get single post
 router.get('/:id',getPost)
 
 //create new post
 router.post('/',createPost)
 
-//update posts
+//update
 router.put('/:id',updatePost)
-
-//delete posts
-router.delete('/:id',deletePost)
 export default router;
+
+//delete
+router.delete('/:id',deletePost)

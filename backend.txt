@@ -1,0 +1,68 @@
+1)learned about overview of backend
+
+2) expressjs and starting a server and deploying it
+express js syntax
+learned about .env file and all the crucial data it stores
+
+
+    computer/mobile <- [connected through express] -> server
+
+    listen - listening 
+    / home router
+    requests - get
+    
+    express- a web framework
+
+    A server in the backend is a system (hardware or software) that processes requests from clients (such as browsers or mobile apps) and returns responses.
+
+    servers are all about responses and requests.
+    learned about .gitignore
+
+    express has req and res
+
+3)frontend+backend
+    created an api in a server 
+    made frontend use it
+    learned about CORS(cross origin)
+    learned about proxy to resolve cors errors
+
+    bad practice-pushing your whole bakcend and frotnend code in digital ocean/render or any server hosting apps
+
+4)taking backend to next level
+    overview
+
+5)data modelling with mongoose
+    pehle pen aur paper leke define kr database model kese banega
+
+    boilerplate for mongoose ->
+        import mongoose from "mongoose";
+        const userSchema= new mongoose.Schema({...})
+        export const User = mongoose.model("User",userSchemas)
+
+    to use data from some other file use-
+        createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        },
+    
+    2 ways to define
+        i)username:String,
+            email:String,
+            isActive:boolean
+        ii)username:{
+            type:String,
+            required:true,
+            unique:true,
+            lowercase:true
+            },
+            email:{
+            type:String,
+            required:true,
+            unique:true,
+            lowercase:true,
+            },
+            password:{
+            type:String,
+            required:[true,"password is required"],
+            
+            }

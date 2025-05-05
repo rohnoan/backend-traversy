@@ -12,7 +12,7 @@ promises
 async await
 
 synchronous-
-    u dont wan wait until its done (one after other)
+    u wan wait until its done (one after other)
 asynchronous-
     u want it to work parallely
 
@@ -146,7 +146,7 @@ nodeJS-
         
     process object
 
-expressJS-
+<!-- expressJS-
     whats express-
         -minimal and flexible web framework of nodeJS
         -used for building server side applications and APIs
@@ -216,4 +216,28 @@ expressJS-
         -has access to requests and responses
         -loggin,authentication
         -
+     -->
+
+expressJS
+    -minimal and flexible web framework for nodejs
+    -used for server side web apps
+    -simplifies handling http reqs and responses
+
+    opinionated-
+        hard rules and bells and whistles
+
+    unopinionated-
+        diff ways to do the same thing
+        chill
+    covered-    
+        routing
+        reqs res
+        middleware 
+        crud
+        template engines
+        error handling
+        3rd party npm packages
+        controllers
+        fetchning from frontend
+        env vars
     

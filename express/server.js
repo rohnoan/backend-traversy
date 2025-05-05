@@ -1,36 +1,32 @@
-import express from 'express';
-import path from 'path';
-import posts from './routes/posts.js'
+import express from 'express'
+import path from 'path'
 import logger from './middleware/logger.js'
-import errorHandler from './middleware/error.js';
-import notFound from './middleware/notFound.js';
-import { fileURLToPath } from 'url';
-import cors from 'cors'
-
-//dirname and filename workaround
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const PORT=process.env.PORT|| 8080;
+import posts  from './routes/posts.js'
+import errorHandler from'./middleware/error.js'
+const port=process.env.PORT||8000;
 
 const app=express();
 
-app.use(cors()); 
-
-
 //body parser middleware
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({extended:false}))
 
 //logger middleware
-app.use(logger);
+app.use(logger)
 
 //setup static folder
-app.use(express.static(path.join(__dirname,'public')));
-app.use('/api/posts',posts);
+//app.use(express.static(path.join(__dirname,'public')))
 
-app.use(notFound)
+//routes
+app.use('/api/posts',posts)
+
+app.use((req,res,next)=>{
+    const error=new Error('not found');
+    error.status=404
+    next(error);
+})
+
 //error handler
-app.use(errorHandler)
+app.use(errorHandler);
 
-app.listen(8000,()=>console.log(`server running on port 8000`));
+app.listen(port,()=>console.log(`server is running on port ${port}`))
